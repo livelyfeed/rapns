@@ -5,7 +5,7 @@ require 'rapns'
 
 environment = ARGV[0]
 
-banner = 'Usage: rapns <Rails environment> [options]'
+banner = 'Usage: rapns <environment> [options]'
 if environment.nil? || environment =~ /^-/
   puts banner
   exit 1
@@ -27,7 +27,7 @@ ARGV.options do |opts|
   opts.parse!
 end
 
-ENV['RAILS_ENV'] = environment
+ENV['RAILS_ENV'] ||= environment
 load 'config/environment.rb'
 load 'config/initializers/rapns.rb' if File.exist?('config/initializers/rapns.rb')
 

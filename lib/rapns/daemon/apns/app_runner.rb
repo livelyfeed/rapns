@@ -17,7 +17,7 @@ module Rapns
 
         def started
           poll = Rapns.config[:feedback_poll]
-          host, port = ENVIRONMENTS[app.environment.to_sym][:feedback]
+          host, port = environment[:feedback]
           @feedback_receiver = FeedbackReceiver.new(app, host, port, poll)
           @feedback_receiver.start
         end
@@ -27,8 +27,12 @@ module Rapns
         end
 
         def new_delivery_handler
-          push_host, push_port = ENVIRONMENTS[app.environment.to_sym][:push]
+          push_host, push_port = environment[:push]
           DeliveryHandler.new(app, push_host, push_port)
+        end
+
+        def environment
+          @environment ||= ENVIRONMENTS[app.environment.to_sym]
         end
       end
     end
