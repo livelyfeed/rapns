@@ -25,7 +25,7 @@ module Rapns
       protected
 
       def self.feed_forever
-        ActiveRecord::Base.logger.level = Logger::INFO
+        ActiveRecord::Base.logger.level = ActiveSupport::BufferedLogger::INFO
         loop do
           enqueue_notifications
           interruptible_sleep(Rapns.config.push_poll)
